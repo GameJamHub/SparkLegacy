@@ -1,0 +1,3 @@
+[submodule "Assets/Codebase"]
+	path = Assets/Codebase
+	url = git@github.com:GameJamHub/Codebase.git
