@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -8,6 +6,7 @@ public abstract class CharacterCore : MonoBehaviour
         [FormerlySerializedAs("m_rigidBody")] public Rigidbody2D rigidBody;
         [FormerlySerializedAs("m_animator")] public Animator animator;
         public GroundSensor groundSensor;
+        public LadderSensor ladderSensor;
         public StateMachine stateMachine;
 
         public State state => stateMachine.state;

@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class GroundSensor : MonoBehaviour
 {
-    [SerializeField] private BoxCollider2D m_groundCollider;
+    [SerializeField] private Transform m_leftGroundCheck;
+    [SerializeField] private Transform m_rightGroundCheck;
     [SerializeField] private LayerMask m_groundLayer;
+    [SerializeField] private float m_rayLength = 0.05f;
     
     public bool isGrounded { get; private set; }
     
@@ -17,8 +19,8 @@ public class GroundSensor : MonoBehaviour
 
     private void CheckGround()
     {
-        isGrounded =
-            Physics2D.OverlapAreaAll(m_groundCollider.bounds.min, m_groundCollider.bounds.max, m_groundLayer.value)
-                .Length > 0;
+        RaycastHit2D leftCheckHit = Physics2D.Raycast(m_leftGroundCheck.position, Vector2.down,m_rayLength,m_groundLayer.value);
+        RaycastHit2D rightCheckHit = Physics2D.Raycast(m_rightGroundCheck.position, Vector2.down, m_rayLength, m_groundLayer.value);
+        isGrounded = (leftCheckHit || rightCheckHit);
     }
 }

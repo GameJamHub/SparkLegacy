@@ -1,7 +1,6 @@
 using System;
 using Codebase.Core;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class PlayerMovement : CharacterCore
 {
@@ -12,6 +11,7 @@ public class PlayerMovement : CharacterCore
    [SerializeField] private RunState m_runState;
    [SerializeField] private AirState m_airState;
    [SerializeField] private DuckState m_duckState;
+   [SerializeField] private ClimbingState m_climbingState;
 
    private bool m_canMove;
    public Vector2 axisValue { get; private set; }
@@ -57,6 +57,10 @@ public class PlayerMovement : CharacterCore
             stateMachine.Set(m_runState);
          }
       }
+      else if (ladderSensor.isOnLadder)
+      {
+         stateMachine.Set(m_climbingState);
+      }
       else
       {
          stateMachine.Set(m_airState);
@@ -67,19 +71,28 @@ public class PlayerMovement : CharacterCore
    {
       Move();
       ApplyFriction();
+      Climb();
    }
 
    private void HandleOnJump()
    {
-      if (groundSensor.isGrounded)
+      if (groundSensor.isGrounded || ladderSensor.isOnLadder)
       {
          Jump();
       }
    }
 
+   private void Climb()
+   {
+      if (ladderSensor.isOnLadder)
+      {
+         rigidBody.velocity = new Vector2(rigidBody.velocity.x, m_climbingState.m_climbSpeed * axisValue.y);
+      }
+   }
+
    private void ApplyFriction()
    {
-      if (groundSensor.isGrounded && rigidBody.velocity.y<=0f)
+      if (groundSensor.isGrounded && rigidBody.velocity.y<=0f || ladderSensor.isOnLadder)
       {
          rigidBody.velocity *= m_groundDrag;
       }
@@ -111,5 +124,16 @@ public class PlayerMovement : CharacterCore
    {
       GameplayEvents.OnMovement -= HandleOnMovement;
       GameplayEvents.OnJump -= HandleOnJump;
+   }
+
+   private void OnDrawGizmos()
+   {
+#if UNITY_EDITOR
+      if(Application.isPlaying)
+      {
+         UnityEditor.Handles.Label(transform.position + Vector3.up * 2f, "Active State : "+state);
+      }
+#endif
+
    }
 }
