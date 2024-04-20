@@ -24,6 +24,7 @@ public abstract class State : MonoBehaviour
     public virtual void Enter()
     {
         m_characterCore.animator.speed = 1;
+        m_characterCore.rigidBody.gravityScale = 1;
     }
     public virtual void Do() {}
     public virtual void FixedDo() {}
