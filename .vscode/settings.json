@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "SparkLegacy_Unity.sln"
+    "dotnet.defaultSolution": "SparkLegacy.sln"
 }
