@@ -37,6 +37,7 @@ public class Controller2D : MonoBehaviour
     [SerializeField] private int m_verticalRayCount = 4;
     [SerializeField] private LayerMask m_groundLayer;
     [SerializeField] private float m_maxClimbAngle = 80f;
+    [SerializeField] private float m_maxDescendAngle = 80f;
 
     private RaycastOrigins m_raycastOrigins;
     private float m_horizontalRaySpacing;
@@ -90,6 +91,23 @@ public class Controller2D : MonoBehaviour
                 
                 collisionInfo.above = directionY == 1;
                 collisionInfo.below = directionY == -1;
+            }
+        }
+
+        if (collisionInfo.climbingSlope)
+        {
+            float directionX = Mathf.Sign(velocity.x);
+            rayLength = Mathf.Abs(velocity.x) + SKIN_WIDTH * transform.localScale.x;
+            Vector2 rayOrigin = ((directionX == -1) ? m_raycastOrigins.bottomLeft : m_raycastOrigins.bottomRight) + Vector2.up * velocity.y;
+            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength, m_groundLayer.value);
+            if (hit)
+            {
+                float slopAngle = Vector2.Angle(hit.normal, Vector2.up);
+                if (slopAngle != collisionInfo.slopeAngle)
+                {
+                    velocity.x = (hit.distance - SKIN_WIDTH * transform.localScale.x) * directionX;
+                    collisionInfo.slopeAngle = slopAngle; 
+                }
             }
         }
     }
@@ -148,6 +166,11 @@ public class Controller2D : MonoBehaviour
             collisionInfo.climbingSlope = true;
             collisionInfo.slopeAngle = slopeAngle;
         }
+    }
+
+    private void DescendSlope(ref Vector3 velocity, float slopeAngle)
+    {
+        
     }
     
     private void UpdateRaycastOrigins()
