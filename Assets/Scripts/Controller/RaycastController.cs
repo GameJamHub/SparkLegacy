@@ -22,6 +22,7 @@ public class RaycastController : MonoBehaviour
         public bool descendingSlope;
         public float slopeAngle, slopeAngleOld;
         public Vector3 velocityOld;
+        public int faceDir;
 
         public void Reset()
         {
