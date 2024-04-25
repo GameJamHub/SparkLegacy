@@ -9,6 +9,8 @@ public abstract class CharacterCore : MonoBehaviour
         public LadderSensor ladderSensor;
         public StateMachine stateMachine;
 
+        public bool m_isAttackPressed = false;
+
         public State state => stateMachine.state;
 
         public void Set(State newState, bool forceReset = false)
