@@ -44,6 +44,24 @@ public partial class @PlayerIA: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ShortRange"",
+                    ""type"": ""Button"",
+                    ""id"": ""acb90407-be8d-4be4-8da0-ca2acd15e18f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LongRange"",
+                    ""type"": ""Button"",
+                    ""id"": ""ad16f9b9-c5a7-4861-aca1-ea4963cb01ad"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -189,6 +207,50 @@ public partial class @PlayerIA: IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b8a8eb71-1d90-4edf-a8e8-4670e8d2b01a"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShortRange"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f7e3962a-6a9c-45b4-82a2-67d33ff931b6"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShortRange"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""86086fb9-6fd0-4d86-a360-938e64c49fa2"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LongRange"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b8afa7ad-504a-4657-bbb9-f51c8469b683"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LongRange"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -199,6 +261,8 @@ public partial class @PlayerIA: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
+        m_Player_ShortRange = m_Player.FindAction("ShortRange", throwIfNotFound: true);
+        m_Player_LongRange = m_Player.FindAction("LongRange", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -262,12 +326,16 @@ public partial class @PlayerIA: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Jump;
+    private readonly InputAction m_Player_ShortRange;
+    private readonly InputAction m_Player_LongRange;
     public struct PlayerActions
     {
         private @PlayerIA m_Wrapper;
         public PlayerActions(@PlayerIA wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
+        public InputAction @ShortRange => m_Wrapper.m_Player_ShortRange;
+        public InputAction @LongRange => m_Wrapper.m_Player_LongRange;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -283,6 +351,12 @@ public partial class @PlayerIA: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @ShortRange.started += instance.OnShortRange;
+            @ShortRange.performed += instance.OnShortRange;
+            @ShortRange.canceled += instance.OnShortRange;
+            @LongRange.started += instance.OnLongRange;
+            @LongRange.performed += instance.OnLongRange;
+            @LongRange.canceled += instance.OnLongRange;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -293,6 +367,12 @@ public partial class @PlayerIA: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @ShortRange.started -= instance.OnShortRange;
+            @ShortRange.performed -= instance.OnShortRange;
+            @ShortRange.canceled -= instance.OnShortRange;
+            @LongRange.started -= instance.OnLongRange;
+            @LongRange.performed -= instance.OnLongRange;
+            @LongRange.canceled -= instance.OnLongRange;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -314,5 +394,7 @@ public partial class @PlayerIA: IInputActionCollection2, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnShortRange(InputAction.CallbackContext context);
+        void OnLongRange(InputAction.CallbackContext context);
     }
 }

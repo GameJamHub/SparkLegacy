@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : CharacterCore
 {
+   private string ANIM_SHORT_ATTACK = "Lightning01";
+
    [SerializeField] private float m_maxAcceleration = 0.5f;
    [SerializeField] private float m_deadZoneThreshhold = 0.1f;
    [Range(0f,1f)] [SerializeField] private float m_groundDrag = 0.9f;
@@ -12,20 +14,46 @@ public class PlayerMovement : CharacterCore
    [SerializeField] private AirState m_airState;
    [SerializeField] private DuckState m_duckState;
    [SerializeField] private ClimbingState m_climbingState;
+   [SerializeField] private PlayerAttack m_playerAttack;
+   [SerializeField] private Animator m_shortAttackAnimator;
+   [SerializeField] private ThunderArrowSpawner m_thunderArrowSpawner;
 
    private bool m_canMove;
+   public bool m_isShortAttack {get; private set;}
    public Vector2 axisValue { get; private set; }
    
    private void OnEnable()
    {
       GameplayEvents.OnMovement += HandleOnMovement;
       GameplayEvents.OnJump += HandleOnJump;
+      GameplayEvents.OnShortAttackPerformed += HandleOnShortAttackPerformed;
+      GameplayEvents.OnLongAttackPerformed += HandleOnLongAttackPerformed;
    }
 
    private void Start()
    {
       SetupInstances();
       stateMachine.Set(m_idleState);
+   }
+
+   private void HandleOnShortAttackPerformed()
+   {
+      m_isAttackPressed = true;
+      m_isShortAttack = true;
+      if(groundSensor.isGrounded)
+      {
+         Attack();
+      }
+   }
+
+   private void HandleOnLongAttackPerformed()
+   {
+      m_isAttackPressed = true;
+      m_isShortAttack = false;
+      if(groundSensor.isGrounded)
+      {
+         Attack();
+      }
    }
 
    private void HandleOnMovement(Vector2 _axisValue, bool canMove)
@@ -37,7 +65,7 @@ public class PlayerMovement : CharacterCore
    private void Update()
    {
       SelectState();
-      stateMachine.state.Do();
+      stateMachine.state.DoBranch();
    }
 
    private void SelectState()
@@ -48,11 +76,15 @@ public class PlayerMovement : CharacterCore
          {
             stateMachine.Set(m_duckState);
          }
+         else if(m_isAttackPressed)
+         {
+            stateMachine.Set(m_playerAttack, true);
+         }
          else if (axisValue.x == 0)
          {
             stateMachine.Set(m_idleState);
          }
-         else
+         else if(!m_isAttackPressed)
          {
             stateMachine.Set(m_runState);
          }
@@ -70,7 +102,7 @@ public class PlayerMovement : CharacterCore
    private void FixedUpdate()
    {
       Move();
-      ApplyFriction();
+      // ApplyFriction();
       Climb();
    }
 
@@ -98,6 +130,18 @@ public class PlayerMovement : CharacterCore
       }
    }
 
+   private void Attack()
+   {
+      if(m_isShortAttack)
+      {
+         m_shortAttackAnimator.Play(ANIM_SHORT_ATTACK);
+      }
+      else
+      {
+         m_thunderArrowSpawner.Spawn(Vector3.right * transform.localScale.x);
+      }
+   }
+
    private void Jump()
    {
       rigidBody.velocity = new Vector2(rigidBody.velocity.x, m_airState.JumpForce * m_airState.JumpSpeed);
@@ -117,13 +161,17 @@ public class PlayerMovement : CharacterCore
    private void FaceDirection()
    {
       float direction = Mathf.Sign(axisValue.x);
-      transform.localScale = new Vector3(direction, 1, 1);
+      Vector3 newScale = transform.localScale;
+      newScale.x= Mathf.Abs(newScale.x) *  direction;
+      transform.localScale = newScale;
    }
    
    private void OnDisable()
    {
       GameplayEvents.OnMovement -= HandleOnMovement;
       GameplayEvents.OnJump -= HandleOnJump;
+      GameplayEvents.OnShortAttackPerformed -= HandleOnShortAttackPerformed;
+      GameplayEvents.OnLongAttackPerformed -= HandleOnLongAttackPerformed;
    }
 
    private void OnDrawGizmos()

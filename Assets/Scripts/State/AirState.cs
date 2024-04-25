@@ -6,8 +6,13 @@ public class AirState : State
 {
     private const string ANIM_JUMP = "Jump-Animation";
 
+    private const string ANIM_JUMP_IDLE = "FallingIdle";
+    private const string ANIM_JUMP_FALL = "Smoke_Falling";
+
     [SerializeField] private float m_jumpSpeed = 3.5f;
     [SerializeField] private float m_jumpForce = 1;
+
+    [SerializeField] private Animator m_fallPFXAnimator;
 
     public float JumpForce => m_jumpForce;
     public float JumpSpeed => m_jumpSpeed;
@@ -38,5 +43,9 @@ public class AirState : State
     public override void Exit()
     {
         base.Exit();
+        if (m_characterCore.groundSensor.isGrounded)
+        {
+            m_fallPFXAnimator.Play(ANIM_JUMP_FALL);
+        }
     }
 }
