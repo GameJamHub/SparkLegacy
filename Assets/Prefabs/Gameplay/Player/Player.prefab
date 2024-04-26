@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7371126950117883676}
   - component: {fileID: 1303061624041204574}
   - component: {fileID: 2278245112513118827}
+  - component: {fileID: 8859910675730908028}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -131,6 +132,18 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   m_radiusLength: 0.15
+--- !u!114 &8859910675730908028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949986040821992356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d65236d91340648a83de1e777f9c52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1354014838973909217
 GameObject:
   m_ObjectHideFlags: 0
@@ -423,6 +436,8 @@ GameObject:
   - component: {fileID: 5021705139474801392}
   - component: {fileID: 8619538274156246528}
   - component: {fileID: 2195129884654385763}
+  - component: {fileID: 3785060693401981431}
+  - component: {fileID: 6766114272903723199}
   m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
@@ -518,6 +533,26 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!81 &3785060693401981431
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5443783066168557679}
+  m_Enabled: 1
+--- !u!114 &6766114272903723199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5443783066168557679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d65236d91340648a83de1e777f9c52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5779768181439398853
 GameObject:
   m_ObjectHideFlags: 0
