@@ -112,6 +112,7 @@ public class PlayerMovement : CharacterCore
       if (groundSensor.isGrounded || ladderSensor.isOnLadder)
       {
          Jump();
+         AudioManager.Instance.PlayOneShotSFX(AudioManager.Instance.Audios.playerJump,AudioChannelData.CHANNEL_2);
       }
    }
 
@@ -136,10 +137,12 @@ public class PlayerMovement : CharacterCore
       if(m_isShortAttack)
       {
          m_shortAttackAnimator.Play(ANIM_SHORT_ATTACK);
+         AudioManager.Instance.PlayOneShotSFX(AudioManager.Instance.Audios.playerShortAttack,AudioChannelData.CHANNEL_2);
       }
       else
       {
          m_thunderArrowSpawner.Spawn(Vector3.right * transform.localScale.x);
+         AudioManager.Instance.PlayOneShotSFX(AudioManager.Instance.Audios.playerLongAttack,AudioChannelData.CHANNEL_2);
       }
    }
 

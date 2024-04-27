@@ -12,9 +12,74 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94178cfe16c454815a500ef67a4d7dc9, type: 3}
   m_Name: AudioRepository
   m_EditorClassIdentifier: 
-  backgroundMusic:
+  playerFootSteps:
+  - clip: {fileID: 8300000, guid: 8dbf903d29ec40e47a0fb3220af97b4f, type: 3}
+    volume: 0.4
+    pitch: 1
+  - clip: {fileID: 8300000, guid: b01d0f1f359e5d247ba980c87747d62f, type: 3}
+    volume: 0.4
+    pitch: 1
+  - clip: {fileID: 8300000, guid: cf2720f2181352447983ba19fda5f5ae, type: 3}
+    volume: 0.4
+    pitch: 1
+  - clip: {fileID: 8300000, guid: e90cc32cabad8a243958f5c05948280e, type: 3}
+    volume: 0.4
+    pitch: 1
+  - clip: {fileID: 8300000, guid: 3f8160d9b3c339c4f8324cee1b31b883, type: 3}
+    volume: 0.4
+    pitch: 1
+  playerShortAttack:
+    clip: {fileID: 8300000, guid: 5b8e8686797ecd8429075e5c7c5cd967, type: 3}
+    volume: 1
+    pitch: 1
+  playerLongAttack:
+    clip: {fileID: 8300000, guid: 0a49e1d1b3bb281498285888a1a5d299, type: 3}
+    volume: 1
+    pitch: 1
+  playerJump:
+    clip: {fileID: 8300000, guid: fce3464e657b4a6439464500991840d8, type: 3}
+    volume: 0.3
+    pitch: 1
+  playerDead:
+    clip: {fileID: 8300000, guid: 41925b0252432874782edbc9df8391e7, type: 3}
+    volume: 1
+    pitch: 1
+  playerDamageTaken:
+    clip: {fileID: 8300000, guid: 73b70084564eedb44864df86afee7757, type: 3}
+    volume: 1
+    pitch: 1
+  music:
+    clip: {fileID: 8300000, guid: cc7623938e93a9643bfa14bef413dd16, type: 3}
+    volume: 1
+    pitch: 1
+  playerFallHit:
+    clip: {fileID: 8300000, guid: 05e3f2b8fb220934eb63017f19f97147, type: 3}
+    volume: 1
+    pitch: 1
+  healthReduce:
     clip: {fileID: 0}
-    volume: 0
+    volume: 1
+    pitch: 1
+  ladderClimb:
+  - clip: {fileID: 8300000, guid: 07ab9c83d754abb43a02daec499b42ac, type: 3}
+    volume: 0.3
+    pitch: 1
+  - clip: {fileID: 8300000, guid: b3852649dc1dd2542b808ea3485f9cf6, type: 3}
+    volume: 0.3
+    pitch: 1
+  - clip: {fileID: 8300000, guid: d90db40e90e489049b8d5ee1eb06100e, type: 3}
+    volume: 0.3
+    pitch: 1
+  - clip: {fileID: 8300000, guid: dd69c6250e1c5a14eb9c0f850c5c1456, type: 3}
+    volume: 0.3
+    pitch: 1
+  dash:
+    clip: {fileID: 8300000, guid: d69a4a714fe0e174b98e748a7ebaff40, type: 3}
+    volume: 1
+    pitch: 1
+  backgroundMusic:
+    clip: {fileID: 8300000, guid: cc7623938e93a9643bfa14bef413dd16, type: 3}
+    volume: 0.4
     pitch: 100
   buttonClickSFX:
     clip: {fileID: 0}
