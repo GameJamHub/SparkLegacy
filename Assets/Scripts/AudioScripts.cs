@@ -17,5 +17,4 @@ public class AudioScripts : MonoBehaviour
       int Index = UnityEngine.Random.Range(0, AudioManager.Instance.Audios.ladderClimb.Length);
       AudioManager.Instance.PlayOneShotSFX(AudioManager.Instance.Audios.ladderClimb[Index],AudioChannelData.CHANNEL_2);      
    }
-
 }

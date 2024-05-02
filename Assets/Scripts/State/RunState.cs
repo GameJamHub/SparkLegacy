@@ -27,6 +27,7 @@ public class RunState : State
       
         if (!m_characterCore.groundSensor.isGrounded || m_characterCore.rigidBody.velocity.x == 0)
         {
+            m_walkPfxAnimator.Play(ANIM_WALK_IDLE);
             isComplete = true;
         }
     }

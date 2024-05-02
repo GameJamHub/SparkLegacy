@@ -62,6 +62,24 @@ public partial class @PlayerIA: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dash"",
+                    ""type"": ""Button"",
+                    ""id"": ""4883f4e9-2fa9-4fde-9ffc-4bbf0c914998"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Absorb"",
+                    ""type"": ""Button"",
+                    ""id"": ""9e64b654-2a8c-404f-8599-0e3b75c29ce9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -232,6 +250,17 @@ public partial class @PlayerIA: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""5db86cb6-f5bd-4011-813e-50678388111b"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShortRange"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""86086fb9-6fd0-4d86-a360-938e64c49fa2"",
                     ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
@@ -251,6 +280,61 @@ public partial class @PlayerIA: IInputActionCollection2, IDisposable
                     ""action"": ""LongRange"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""869f6a19-54af-42e0-85c4-0787274f531b"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LongRange"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8ad7f835-2d9b-4ead-8710-95c93366d664"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4a9ecc3c-60bb-4375-b94b-f0213292f7fd"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""08fb7114-f153-44df-b12d-7a3145baefef"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Absorb"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""376d57f2-9490-4754-a617-0a477469c729"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Absorb"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -263,6 +347,8 @@ public partial class @PlayerIA: IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_ShortRange = m_Player.FindAction("ShortRange", throwIfNotFound: true);
         m_Player_LongRange = m_Player.FindAction("LongRange", throwIfNotFound: true);
+        m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
+        m_Player_Absorb = m_Player.FindAction("Absorb", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -328,6 +414,8 @@ public partial class @PlayerIA: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_ShortRange;
     private readonly InputAction m_Player_LongRange;
+    private readonly InputAction m_Player_Dash;
+    private readonly InputAction m_Player_Absorb;
     public struct PlayerActions
     {
         private @PlayerIA m_Wrapper;
@@ -336,6 +424,8 @@ public partial class @PlayerIA: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @ShortRange => m_Wrapper.m_Player_ShortRange;
         public InputAction @LongRange => m_Wrapper.m_Player_LongRange;
+        public InputAction @Dash => m_Wrapper.m_Player_Dash;
+        public InputAction @Absorb => m_Wrapper.m_Player_Absorb;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -357,6 +447,12 @@ public partial class @PlayerIA: IInputActionCollection2, IDisposable
             @LongRange.started += instance.OnLongRange;
             @LongRange.performed += instance.OnLongRange;
             @LongRange.canceled += instance.OnLongRange;
+            @Dash.started += instance.OnDash;
+            @Dash.performed += instance.OnDash;
+            @Dash.canceled += instance.OnDash;
+            @Absorb.started += instance.OnAbsorb;
+            @Absorb.performed += instance.OnAbsorb;
+            @Absorb.canceled += instance.OnAbsorb;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -373,6 +469,12 @@ public partial class @PlayerIA: IInputActionCollection2, IDisposable
             @LongRange.started -= instance.OnLongRange;
             @LongRange.performed -= instance.OnLongRange;
             @LongRange.canceled -= instance.OnLongRange;
+            @Dash.started -= instance.OnDash;
+            @Dash.performed -= instance.OnDash;
+            @Dash.canceled -= instance.OnDash;
+            @Absorb.started -= instance.OnAbsorb;
+            @Absorb.performed -= instance.OnAbsorb;
+            @Absorb.canceled -= instance.OnAbsorb;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -396,5 +498,7 @@ public partial class @PlayerIA: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnShortRange(InputAction.CallbackContext context);
         void OnLongRange(InputAction.CallbackContext context);
+        void OnDash(InputAction.CallbackContext context);
+        void OnAbsorb(InputAction.CallbackContext context);
     }
 }
