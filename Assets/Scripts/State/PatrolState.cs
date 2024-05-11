@@ -6,7 +6,7 @@ public class PatrolState : State
 {
     public NavigateState navigateState;
 
-    public IdleState idleState;
+    public NPCIdle idleState;
 
     public Transform anchor1;
 

@@ -11,7 +11,6 @@ public class Damager : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Name : "+other.gameObject.name);
         if(other.CompareTag("Player"))
         {
             other.transform.parent.GetComponent<IDamage>().TakeDamage(m_damageAmount,forceX, forceY, duration, transform);

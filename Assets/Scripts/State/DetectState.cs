@@ -11,7 +11,9 @@ public class DetectState : State
 
     public NavigateState navigateState;
 
-    public IdleState idleState;
+    public NPCIdle idleState;
+
+    public NPCShortAttack shortAttackState;
 
     public float detectRadius;
 
@@ -30,9 +32,8 @@ public class DetectState : State
         {
             if (CloseEnough(target.position))
             {
-                Set(idleState, true);
+                Set(shortAttackState, true);
                 m_characterCore.rigidBody.velocity = new Vector2(0, m_characterCore.rigidBody.velocity.y);
-                target.gameObject.SetActive(false);
                 return; 
             }
             else if(!InVision(target.position))

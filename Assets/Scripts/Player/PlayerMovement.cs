@@ -69,9 +69,25 @@ public class PlayerMovement : CharacterCore, IDamage, IAbsorbElectric
 
    public void TakeDamage(float amount, float forceX = 0f, float forceY = 0f, float duration = 0f, Transform otherTransform = null)
    {
+      AudioManager.Instance.PlayOneShotSFX(AudioManager.Instance.Audios.playerDamageTaken,AudioChannelData.CHANNEL_2);
       animator.Play(ANIM_HURT);
       GameManager.Instance.UpdateHealthBar(amount);
+      StartCoroutine(HurtEffect(duration/1.3f));
       StartCoroutine(KnockBack(forceX,forceY, duration, otherTransform));
+   }
+
+   private IEnumerator HurtEffect(float duration)
+   {
+      float currentTime = 0;
+      bool isNormalAlpha = false;
+      while (currentTime<duration)
+      {
+         m_playerSprite.color = isNormalAlpha ? Color.white : Color.red;
+         currentTime += Time.deltaTime * 5f;
+         isNormalAlpha = !isNormalAlpha;
+         yield return new WaitForSeconds(0.1f);
+      }
+      m_playerSprite.color = Color.white;
    }
 
    public void Absorb(float amount)
@@ -112,6 +128,7 @@ public class PlayerMovement : CharacterCore, IDamage, IAbsorbElectric
    {
       if(m_collectable!=null)
       {
+         AudioManager.Instance.PlayOneShotSFX(AudioManager.Instance.Audios.sparkAbsorb,AudioChannelData.CHANNEL_2);
          GameManager.Instance.UpdateElectricBar(m_collectable.absorbAmount);
          Destroy(m_collectable.gameObject);
       }

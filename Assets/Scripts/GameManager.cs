@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Codebase.Audio;
 using Codebase.Core;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ public class GameManager : Singleton<GameManager>
 {
     [SerializeField] private HealthBar m_healthBar;
     [SerializeField] private ElectricBar m_electricBar;
+    [SerializeField] private GameObject m_gameover;
 
     protected override void Init() {}
 
@@ -37,7 +39,10 @@ public class GameManager : Singleton<GameManager>
 
     private void HandleOnGameOver()
     {
+        AudioManager.Instance.PlayOneShotSFX(AudioManager.Instance.Audios.playerDead, AudioChannelData.CHANNEL_2);
         InputManager.Instance.DisableInputs();
+        m_gameover.SetActive(true);
+        Time.timeScale = 0;
     }
 
     void OnDisable()

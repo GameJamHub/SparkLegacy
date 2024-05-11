@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,9 +23,13 @@ public class ThunderArrow : MonoBehaviour
         m_direction = direction;
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        //TODO: Add Enemy Detection code
+        if (other.CompareTag("Enemy"))
+        {
+            Destroy(gameObject);
+            other.transform.parent.GetComponent<IDamage>().TakeDamage(10f);
+        }
     }
 
     private void Update() {

@@ -57,7 +57,7 @@ MonoBehaviour:
     volume: 1
     pitch: 1
   healthReduce:
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 92cbd94932064ab478d5efa127d1265c, type: 3}
     volume: 1
     pitch: 1
   ladderClimb:
@@ -75,6 +75,10 @@ MonoBehaviour:
     pitch: 1
   dash:
     clip: {fileID: 8300000, guid: d69a4a714fe0e174b98e748a7ebaff40, type: 3}
+    volume: 1
+    pitch: 1
+  sparkAbsorb:
+    clip: {fileID: 8300000, guid: e280c9560c86eff47a0884d34e343dbf, type: 3}
     volume: 1
     pitch: 1
   backgroundMusic:

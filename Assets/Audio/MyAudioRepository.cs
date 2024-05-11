@@ -18,6 +18,7 @@ namespace Codebase.Audio
         public AudioClipReference healthReduce;
         public AudioClipReference[] ladderClimb;
         public AudioClipReference dash;
+        public AudioClipReference sparkAbsorb;
     }
 }
 

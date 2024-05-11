@@ -45,7 +45,10 @@ public class AirState : State
         base.Exit();
         if (m_characterCore.groundSensor.isGrounded)
         {
-            m_fallPFXAnimator.Play(ANIM_JUMP_FALL);
+            if (m_fallPFXAnimator != null)
+            {
+                m_fallPFXAnimator.Play(ANIM_JUMP_FALL);
+            }
         }
     }
 }

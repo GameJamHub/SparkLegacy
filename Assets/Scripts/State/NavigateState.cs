@@ -10,7 +10,7 @@ public class NavigateState : State
 
     public float threshold = 0.1f;
 
-    public RunState runState;
+    public NPCRun runState;
 
     public override void Enter()
     {
@@ -30,7 +30,10 @@ public class NavigateState : State
 
     private void FaceDestination()
     {
-        m_characterCore.transform.localScale = new Vector3(Mathf.Sign(m_characterCore.rigidBody.velocity.x), 1, 1);
+        float direction = Mathf.Sign(m_characterCore.rigidBody.velocity.x);
+        Vector3 newScale = m_characterCore.transform.localScale;
+        newScale.x= Mathf.Abs(newScale.x) *  direction;
+        m_characterCore.transform.localScale = newScale;
     }
     
     public override void FixedDo()

@@ -16,7 +16,10 @@ public class RunState : State
     {
         base.Enter();
         m_characterCore.animator.Play(ANIM_RUNNING);
-        m_walkPfxAnimator.Play(ANIM_WALK_PFX);
+        if (m_walkPfxAnimator != null)
+        {
+            m_walkPfxAnimator.Play(ANIM_WALK_PFX);
+        }
     }
 
     public override void Do()
@@ -27,7 +30,10 @@ public class RunState : State
       
         if (!m_characterCore.groundSensor.isGrounded || m_characterCore.rigidBody.velocity.x == 0)
         {
-            m_walkPfxAnimator.Play(ANIM_WALK_IDLE);
+            if (m_walkPfxAnimator != null)
+            {
+                m_walkPfxAnimator.Play(ANIM_WALK_IDLE);
+            }
             isComplete = true;
         }
     }
@@ -40,6 +46,9 @@ public class RunState : State
     public override void Exit()
     {
         base.Exit();
-        m_walkPfxAnimator.Play(ANIM_WALK_IDLE);
+        if (m_walkPfxAnimator != null)
+        {
+            m_walkPfxAnimator.Play(ANIM_WALK_IDLE);
+        }
     }
 }
